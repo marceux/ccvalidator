@@ -6,7 +6,9 @@
 			'ccimgs'   : '#acceptedcards',
 			'errorclass' : 'error',
 			'validclass' : 'valid',
-			'validateon' : 'blur'
+			'validateon' : 'blur',
+			'onChangeIssuer': highlightIssuer,
+			'onValidation': cc_error
       	};
 
 		if ( options ) {
@@ -24,7 +26,8 @@
 				return;
 			}
 			
-			highlightIssuer();
+			var issuer = cc_getIssuer();
+			cfg.onChangeIssuer(issuer);
 			
 			if($('#cc_errormsg').length != 0) {
 				cc_error(cc_validate());
@@ -38,13 +41,13 @@
 				cc_reset();
 				return;
 			}
-			cc_error(cc_validate());
+			cfg.onValidation(cc_validate());
 		});
 
 		
-		function highlightIssuer() {
+		function highlightIssuer(issuer) {
 			$(cfg.ccimgs).children('li').css('opacity', 0.1);
-			$(cfg.ccimgs).children('.'+cc_getIssuer()).css('opacity', 1);			
+			$(cfg.ccimgs).children('.' + issuer).css('opacity', 1);			
 		}
 		
 		// Returns the Credit card issuer from the known list, else returns 'cc_unknown'

@@ -81,7 +81,13 @@
 		$(document).ready(function() {
 	
 		$("#ccnum").ccvalidator({
-			'validateon': 'keyup'
+			'validateon': 'keyup',
+			'onChangeIssuer': function(issuer) {
+				console.log(issuer);
+			},
+			'onValidation': function(result) {
+				console.log(result);
+			}
 		});
 		
 		
